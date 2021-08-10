@@ -52,7 +52,7 @@ class OrderDetailActivity : BaseActivity() {
     private fun bindData(medication: Medication) {
         _binding.apply {
             textStatus.setStatus(medication.status ?: "")
-            textOrderNumber.text = medication.id
+            textOrderNumber.text = "#${medication.id}"
             medication.address?.let {
                 textAddress.text =
                     "${it.firstLine}, ${it.secondLine}, ${it.subDistrict}, ${it.district}, ${it.province}, ${it.postalCode}"

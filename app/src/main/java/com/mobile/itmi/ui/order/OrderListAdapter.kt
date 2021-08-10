@@ -1,5 +1,6 @@
 package com.mobile.itmi.ui.order
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -27,12 +28,13 @@ class OrderListAdapter(private val onOrderClicked: (id: String) -> Unit) :
         )
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val model = medicationList[position]
         holder.binding.apply {
             textName.text = model.fullName
             textDate.text = model.updatedAt.formatToDate()
-            textOrderNumber.text = model.id
+            textOrderNumber.text = "#${model.id}"
             textPrice.text = model.totalPrice.formatPrice(model.currency)
             textStatus.setStatus(model.status ?: "")
             root.setOnClickListener {
