@@ -5,8 +5,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.mobile.itmi.data.model.Medication
 import com.mobile.itmi.databinding.ItemOrderBinding
+import com.mobile.itmi.extension.setStatus
+import formatPrice
+import formatToDate
 
-class OrderListAdapter() :
+class OrderListAdapter(private val onOrderClicked: (id: String) -> Unit) :
     RecyclerView.Adapter<OrderListAdapter.ViewHolder>() {
 
     var medicationList = listOf<Medication>()
@@ -28,10 +31,13 @@ class OrderListAdapter() :
         val model = medicationList[position]
         holder.binding.apply {
             textName.text = model.fullName
-            textDate.text = model.updatedAt
+            textDate.text = model.updatedAt.formatToDate()
             textOrderNumber.text = model.id
-            textPrice.text = model.totalPrice
-            textStatus.text = model.status
+            textPrice.text = model.totalPrice.formatPrice(model.currency)
+            textStatus.setStatus(model.status ?: "")
+            root.setOnClickListener {
+                onOrderClicked.invoke(model.id)
+            }
         }
     }
 

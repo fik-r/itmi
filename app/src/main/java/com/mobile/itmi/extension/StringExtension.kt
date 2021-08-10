@@ -1,24 +1,32 @@
 import android.annotation.SuppressLint
-import android.text.Spanned
-import androidx.core.text.HtmlCompat
+import java.text.DecimalFormat
+import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*
-
-fun String.toHtml(): Spanned {
-    return HtmlCompat.fromHtml(this, HtmlCompat.FROM_HTML_MODE_LEGACY)
-}
 
 @SuppressLint("SimpleDateFormat")
 fun String?.formatToDate(): String? {
     return if (this != null && this != "") {
         try {
-            var format = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
+            var format = SimpleDateFormat("YYYY-MM-DD HH:mm:ss")
             val newDate: Date = format.parse(this)
 
             format = SimpleDateFormat("dd MMM yyyy, HH.mm")
             format.format(newDate)
         } catch (e: Exception) {
-            return ""
+            return "-"
         }
-    } else ""
+    } else "-"
+}
+
+fun String?.formatPrice(currency: String?): String {
+    return when (currency) {
+        "IDR" -> "Rp ${getPrice(this?.toInt() ?: 0)}"
+        else -> "-"
+    }
+}
+
+private fun getPrice(price: Int): String {
+    val formatter: NumberFormat = DecimalFormat("#,###")
+    return formatter.format(price).toString().replace(",", ".")
 }

@@ -5,7 +5,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.mobile.itmi.base.BaseActivity
 import com.mobile.itmi.databinding.ActivityOrderListBinding
+import com.mobile.itmi.extension.startActivity
 import com.mobile.itmi.extension.subscribeSingleLiveEvent
+import com.mobile.itmi.ui.order.detail.OrderDetailActivity
 import org.koin.android.viewmodel.ext.android.viewModel
 
 
@@ -13,7 +15,11 @@ class OrderListActivity : BaseActivity() {
     private val _viewModel: OrderListViewModel by viewModel()
     private lateinit var _binding: ActivityOrderListBinding
     private val _orderListAdapter by lazy {
-        OrderListAdapter()
+        OrderListAdapter {
+            startActivity<OrderDetailActivity>(
+                OrderDetailActivity.withData(it)
+            )
+        }
     }
 
     override fun contentView(): View {

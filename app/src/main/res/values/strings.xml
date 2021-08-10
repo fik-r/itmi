@@ -4,4 +4,5 @@
     <string name="patient_name">Patient Name</string>
     <string name="phone_number">Phone Number</string>
     <string name="patient_address">Patient Address</string>
+    <string name="prescription">Prescription</string>
 </resources>
